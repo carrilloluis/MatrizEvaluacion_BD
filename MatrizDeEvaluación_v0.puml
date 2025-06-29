@@ -1,0 +1,58 @@
+@startuml me2
+	hide circle
+	skin rose
+	hide empty members
+	
+	entity Docente {
+		*id : INTEGER
+		nombre_completo : VARCHAR
+	}
+	entity CarreraProfesional {
+		*id : INTEGER
+		denominación : VARCHAR
+	}
+	entity Asignatura {
+		*id : INTEGER
+		denominación : VARCHAR
+	}
+	entity OfertaAcadémica {
+		*id : INTEGER
+		id_carrera_profesional : INTEGER
+		id_asignatura : INTEGER 
+		año_lectivo : CHAR
+		temporalidad : CHAR
+		numeración : CHAR
+		id_docente : INTEGER
+		fecha_inicio : DATE 
+	}
+	entity UnidadFormativa {
+		*id : INTEGER
+		descripción_general : VARCHAR
+		id_oferta_académica : INTEGER
+	}
+	entity MatrizEvaluación {
+		*id : INTEGER
+		id_oferta_académica : INTEGER
+		id_unidad_formativa : INTEGER
+		fecha_aplicación : DATE
+	}
+	entity DetalleMatrizEvaluación {
+		*id : INTEGER 
+		id_matriz_evaluación : INTEGER
+		número_sesión : INTEGER
+		objetivos : TEXT
+		criterio_verbal : BOOLEAN 
+		destreza_intelectual : BOOLEAN
+		estrategia_cognitiva : BOOLEAN
+		criterio_actitudinal : BOOLEAN
+		orden : INTEGER
+		puntuaje : FLOAT
+	}
+	Asignatura ||-d-o{ OfertaAcadémica  
+	OfertaAcadémica }|-d-|| Docente
+	OfertaAcadémica }|-r-|| CarreraProfesional
+	OfertaAcadémica ||-l-|{ UnidadFormativa
+	MatrizEvaluación .. UnidadFormativa
+	MatrizEvaluación }|---|| OfertaAcadémica
+	DetalleMatrizEvaluación }o--|| MatrizEvaluación
+@enduml
